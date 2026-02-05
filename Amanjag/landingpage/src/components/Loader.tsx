@@ -4,6 +4,7 @@ import gsap from "gsap";
 
 const words = [
   "Welcome", // English
+  "مرحباً", // Arabic (Dubai)
   "Bienvenido", // Spanish
   "Bienvenue", // French
   "Willkommen", // German

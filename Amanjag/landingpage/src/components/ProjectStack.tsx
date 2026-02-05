@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
 
+import { Button } from "@/components/ui/Button";
+
 const Card = ({
   i,
   title,
@@ -53,12 +55,13 @@ const Card = ({
             <h2 className="text-4xl font-bold mb-4 text-white">{title}</h2>
             <p className="text-gray-400 text-lg leading-relaxed">{description}</p>
             <div className="mt-8">
-              <Link 
+              <Button 
                 href={`/projects/${id}`}
-                className="inline-block px-6 py-3 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition-colors duration-300 text-sm font-medium tracking-wide cursor-pointer relative z-10"
+                variant="outline"
+                className="text-xs px-6 py-3"
               >
                 VIEW PROJECTS
-              </Link>
+              </Button>
             </div>
           </div>
 

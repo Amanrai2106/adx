@@ -1,97 +1,292 @@
 "use client";
-import React, { useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/Button";
+import { X, ArrowRight, Instagram, Linkedin, Twitter, Dribbble } from "lucide-react";
+import { projects } from "@/data/projects";
+import { services } from "@/data/services";
 
 const Nav = () => {
   const [hidden, setHidden] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolledPastAbout, setIsScrolledPastAbout] = useState(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
+
+    // Check if scrolled past "about-grid"
+    if (pathname === '/') {
+        const aboutSection = document.getElementById("about-grid");
+        if (aboutSection) {
+            // We use a small offset (e.g., 100px) to trigger it slightly before or after
+            if (latest >= aboutSection.offsetTop - 100) {
+                setIsScrolledPastAbout(true);
+            } else {
+                setIsScrolledPastAbout(false);
+            }
+        }
+    } else {
+        // On other pages, show background after a small scroll
+        setIsScrolledPastAbout(latest > 50);
+    }
+
+    // Clear previous timeout to reset the "stop" detection
+    if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+    }
+
     if (latest > previous && latest > 150) {
       setHidden(true);
     } else {
       setHidden(false);
     }
+
+    // Set a timeout to detect when scrolling stops
+    scrollTimeoutRef.current = setTimeout(() => {
+        setHidden(false);
+    }, 200); // 200ms delay to consider scrolling "stopped"
   });
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const getContactHref = () => {
+    if (pathname?.startsWith('/projects')) {
+      const slug = pathname.split('/')[2];
+      const proj = projects.find(p => p.id === slug);
+      if (proj) {
+        return `/contact?category=Project&subcategory=${encodeURIComponent(proj.title)}`;
+      }
+      return "/contact?category=Project";
+    }
+    if (pathname?.startsWith('/services')) {
+      const sid = Number(pathname.split('/')[2]);
+      const svc = services.find(s => s.id === sid);
+      if (svc) {
+        return `/contact?category=Services&subcategory=${encodeURIComponent(svc.title)}`;
+      }
+      return "/contact?category=Services";
+    }
+    return "/contact";
+  };
 
   const links = [
     { name: "Home", href: "/#home" },
-    { name: "Work", href: "/#selected-projects" },
+    { name: "Projects", href: "/projects" },
     { name: "Services", href: "/services" },
-    { name: "About", href: "/#about-grid" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: getContactHref() },
   ];
 
+  const menuVariants = {
+    initial: { x: "-100%" },
+    animate: { 
+        x: 0, 
+        transition: { 
+            duration: 0.8, 
+            ease: [0.76, 0, 0.24, 1] as const
+        } 
+    },
+    exit: { 
+        x: "-100%", 
+        transition: { 
+            duration: 0.8, 
+            ease: [0.76, 0, 0.24, 1] as const
+        } 
+    }
+  };
+
+  const linkContainerVariants = {
+    animate: {
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.3
+        }
+    }
+  };
+
+  const linkVariants = {
+    initial: { x: -80, opacity: 0 },
+    animate: {
+        x: 0,
+        opacity: 1,
+        transition: { 
+            duration: 0.8, 
+            ease: [0.76, 0, 0.24, 1] as const
+        }
+    }
+  };
+
   return (
-    <motion.nav
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="sticky top-0 left-0 right-0 z-[9999] px-6 md:px-12 py-5 flex justify-between items-center bg-black border-b border-white/5"
-    >
-      {/* Logo */}
-      <Link href="/">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl font-bold tracking-tighter uppercase text-white cursor-pointer"
+    <>
+        <motion.nav
+          variants={{
+            visible: { y: 0 },
+            hidden: { y: "-100%" },
+          }}
+          animate={hidden ? "hidden" : "visible"}
+          transition={{ duration: 0.35, ease: "easeInOut" }}
+          className={`fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12 py-5 flex justify-between items-center transition-colors duration-500 ${isScrolledPastAbout ? "bg-black/90 backdrop-blur-sm border-b border-white/10" : ""}`}
         >
-          Signsol<span className="text-gray-500">.</span>
-        </motion.div>
-      </Link>
+          {/* Left Side: Menu Toggle & Logo */}
+          <div className="flex items-center gap-6">
+              <button 
+                onClick={toggleMenu} 
+                className="group flex items-center gap-3 cursor-pointer outline-none"
+              >
+                  <div className="flex flex-col gap-1.5 w-8">
+                      <span className={`block w-full h-[2px] transition-colors bg-white group-hover:bg-gray-300`}></span>
+                      <span className={`block w-2/3 h-[2px] transition-colors group-hover:w-full bg-white group-hover:bg-gray-300`}></span>
+                  </div>
+              </button>
 
-      {/* Desktop Links */}
-      <ul className="hidden md:flex gap-10 items-center">
-        {links.map((link, i) => (
-          <motion.li 
-            key={link.name}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="relative group overflow-hidden cursor-pointer"
+              <Link href="/">
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="cursor-pointer"
+                >
+                  <img 
+                    src="/logo.png" 
+                    alt="Signsol Logo" 
+                    className="h-8 w-auto brightness-0 invert"
+                  />
+                </motion.div>
+              </Link>
+          </div>
+
+          {/* Right Side: CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-4"
           >
-            <Link href={link.href} className="block text-sm font-medium text-gray-300 uppercase tracking-wide">
-              <span className="block translate-y-0 group-hover:-translate-y-[150%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]">
-                {link.name}
-              </span>
-              <span className="absolute top-0 left-0 block translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] text-white">
-                {link.name}
-              </span>
-            </Link>
-          </motion.li>
-        ))}
-      </ul>
+            <Button 
+                href="/services" 
+                variant="outline"
+                className={`hidden md:inline-flex px-6 py-2.5 text-xs hover:bg-white hover:text-black hover:border-white`}
+            >
+                Our Services
+            </Button>
+            
+            <Button 
+                href={getContactHref()} 
+                variant="primary"
+                className={`px-6 py-2.5 text-xs hover:bg-orange-500 hover:text-white hover:border-orange-500`}
+            >
+                Have a Meeting
+            </Button>
+          </motion.div>
+        </motion.nav>
 
-      {/* CTA Button */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-        className="hidden md:block"
-      >
-        <Link href="/contact">
-            <button className="relative px-6 py-2.5 rounded-full border border-white/20 text-white text-xs font-bold tracking-widest uppercase overflow-hidden group">
-                <span className="relative z-10 group-hover:text-black transition-colors duration-500">Let&apos;s Talk</span>
-                <div className="absolute inset-0 bg-white transform scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
-            </button>
-        </Link>
-      </motion.div>
+        <AnimatePresence mode="wait">
+            {isMenuOpen && (
+                <motion.div 
+                    variants={menuVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="fixed inset-0 bg-[#111111] z-[10000] flex flex-col text-white h-screen w-screen overflow-hidden"
+                >
+                    {/* Menu Header */}
+                    <div className="flex justify-between items-center px-6 md:px-12 py-5">
+                         <div className="flex items-center gap-6">
+                            <button 
+                                onClick={toggleMenu} 
+                                className="group flex items-center gap-3 cursor-pointer outline-none"
+                            >
+                                <X size={32} className="text-white group-hover:text-gray-300 transition-colors" />
+                            </button>
+                             <div className="cursor-pointer">
+                                <img src="/logo.png" alt="Signsol Logo" className="h-8 w-auto brightness-0 invert" />
+                            </div>
+                         </div>
+                         
+                         <div className="flex items-center gap-4">
+                            <Button 
+                                href="/services" 
+                                variant="outline" 
+                                onClick={toggleMenu}
+                                className="px-6 py-2.5 text-xs hover:bg-white hover:text-black hover:border-white"
+                            >
+                                Our Services
+                            </Button>
+                            <Button 
+                                href={getContactHref()} 
+                                variant="outline" 
+                                onClick={toggleMenu}
+                                className="px-6 py-2.5 text-xs hover:bg-orange-500 hover:text-white hover:border-orange-500"
+                            >
+                                Have a Meeting
+                            </Button>
+                         </div>
+                    </div>
 
-      {/* Mobile Menu Icon (Simplified) */}
-      <div className="md:hidden text-white cursor-pointer">
-        <div className="space-y-1.5">
-            <span className="block w-8 h-0.5 bg-white"></span>
-            <span className="block w-6 h-0.5 bg-white ml-auto"></span>
-        </div>
-      </div>
-    </motion.nav>
+                    {/* Menu Content */}
+                    <div className="flex-grow flex flex-col md:flex-row relative">
+                         {/* Left Side (Desktop) */}
+                         <div className="hidden md:flex flex-col justify-between w-1/3 p-12 relative">
+                             <div className="mt-20">
+                                <p className="text-gray-400 text-lg mb-2">Follow us on our</p>
+                                <p className="text-white font-bold text-xl">Social Media Handles</p>
+                                
+                                <div className="flex gap-4 mt-8">
+                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Instagram size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Twitter size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Linkedin size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Dribbble size={20} /></a>
+                                </div>
+                             </div>
+
+                             <div className="w-full mb-48">
+                                 <img 
+                                    src="/logo.png" 
+                                    alt="Signsol" 
+                                    className="w-full max-w-full brightness-0 invert"
+                                 />
+                             </div>
+                         </div>
+
+                         {/* Right Side Links */}
+                         <div className="flex-grow flex flex-col justify-center items-end px-12 md:px-24 gap-2">
+                             <motion.div 
+                                variants={linkContainerVariants}
+                                initial="initial"
+                                animate="animate"
+                                className="flex flex-col items-end gap-2"
+                             >
+                                 {links.map((link, i) => (
+                                     <motion.div 
+                                        key={link.name}
+                                        variants={linkVariants}
+                                        whileHover={{ scale: 1.05, x: -10 }}
+                                        transition={{ type: "spring", stiffness: 300 }}
+                                        custom={i}
+                                        className="text-right overflow-hidden"
+                                     >
+                                        <Link 
+                                            href={link.href} 
+                                            onClick={toggleMenu}
+                                            className="group relative flex items-center justify-end gap-4 text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white/90 hover:text-white transition-colors uppercase"
+                                        >
+                                            <ArrowRight className="w-8 h-8 md:w-12 md:h-12 text-orange-500 opacity-0 -translate-x-8 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out" />
+                                            <span>{link.name}</span>
+                                        </Link>
+                                     </motion.div>
+                                 ))}
+                             </motion.div>
+                         </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    </>
   );
 };
 

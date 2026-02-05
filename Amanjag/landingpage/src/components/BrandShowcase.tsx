@@ -15,6 +15,8 @@ const brands = [
   { id: 9, name: "Hublot", logo: "/company/hublot.svg", bg: "/imgs/img-4.jpeg" },
 ];
 
+const coltBrand = { id: 10, name: "COLT", logo: "", bg: "/dev/p-3.jpeg" };
+
 const BrandShowcase = () => {
   const [activeBrand, setActiveBrand] = useState(brands[0]);
 
@@ -89,8 +91,21 @@ const BrandShowcase = () => {
             </motion.div>
           ))}
            {/* Empty/Placeholder Grid Item to complete the layout if needed, or mostly just leave it as dynamic */}
-           <div className="hidden md:flex aspect-[16/9] border-r border-b border-white/10 bg-black/20 backdrop-blur-sm items-center justify-center">
-                <div className="h-16 w-16 rounded-full bg-white/10 animate-pulse" />
+           <div 
+             onMouseEnter={() => setActiveBrand(coltBrand)}
+             className={`hidden md:flex aspect-[16/9] border-r border-b border-white/10 bg-black/20 backdrop-blur-sm items-center justify-center cursor-pointer transition-all hover:bg-white/10 ${
+                activeBrand.id === coltBrand.id ? "bg-white/20" : ""
+             }`}
+           >
+                <div className="h-16 w-16 rounded-full bg-white/10 flex items-center justify-center relative">
+                    <span className="text-white font-bold text-sm z-10">COLT</span>
+                </div>
+                {activeBrand.id === coltBrand.id && (
+                    <motion.div
+                      layoutId="active-dot"
+                      className="absolute bottom-4 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_10px_white]"
+                    />
+                )}
            </div>
         </div>
       </div>

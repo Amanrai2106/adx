@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-
-const chars =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/Button";
 
 const images = [
   "/imgs/img-1.png",
@@ -15,60 +14,34 @@ const images = [
   "/imgs/img-7.png",
 ];
 
+const slides = [
+  {
+    title: "ARCHITECTURAL",
+    subtitle: "From Experiential Design to wayfinding"
+  },
+  {
+    title: "GRAPHIC",
+    subtitle: "We design meaningful connections"
+  },
+  {
+    title: "DESIGN",
+    subtitle: "Bold Ideas. Clean Design."
+  }
+];
+
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageIndex = useRef(0);
-  const pRefs = useRef<HTMLParagraphElement[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const letters =
-      containerRef.current.querySelectorAll<HTMLSpanElement>(".letter");
-
-    const tl = gsap.timeline();
-
-    letters.forEach((letterEl, index) => {
-      const finalChar = letterEl.getAttribute("data-char") || "";
-
-      tl.to(
-        letterEl,
-        {
-          delay: 4.8,
-          duration: 0.4,
-          onStart: () => {
-            let scrambleCount = 0;
-            const interval = setInterval(() => {
-              letterEl.textContent = chars.charAt(
-                Math.floor(Math.random() * chars.length)
-              );
-              scrambleCount++;
-              if (scrambleCount > 6) {
-                clearInterval(interval);
-                letterEl.textContent = finalChar;
-              }
-            }, 40);
-          },
-        },
-        index * 0.08 + 0.5
-      );
-    });
-
-    // after last letter animates → reveal paragraphs
-    tl.to(
-      pRefs.current,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.3,
-        ease: "power3.out",
-      },
-      "+=0.5" // wait a bit after last letter
-    );
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
-  // mouse trail effect (unchanged)
+  // mouse trail effect
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -156,69 +129,50 @@ const Hero = () => {
     <div
       id="home"
       ref={containerRef}
-      className="relative z-10 bg-black h-screen text-white flex flex-col items-center justify-center gap-4 md:gap-8 overflow-hidden"
+      className="relative z-10 h-screen text-white overflow-hidden bg-black"
     >
-      {/* First block */}
-      <div className="md:ml-[-10%] lg:ml-[-30%] flex flex-col-reverse md:flex-row gap-5 items-center">
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-aboreto overflow-hidden">
-          {"ARCHITECTURAL".split("").map((char, ci) => (
-            <span
-              key={ci}
-              data-char={char}
-              className="letter inline-block will-change-transform"
-            >
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-        </h1>
-        <p
-          ref={(el) => {
-            if (el && !pRefs.current.includes(el)) {
-              pRefs.current.push(el);
-            }
-          }}
-          className="hero-text underline opacity-0 translate-y-6"
+      {/* Background Video */}
+      <div className="absolute inset-0 -z-10">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-80"
         >
-          From Experiential Design to wayfinding
-        </p>
+          <source src="/bg.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* Second block */}
-      <h1 className="text-7xl md:text-8xl lg:text-9xl font-aboreto overflow-hidden">
-        {"GRAPHIC".split("").map((char, ci) => (
-          <span
-            key={ci}
-            data-char={char}
-            className="letter inline-block will-change-transform"
+      {/* Rotating Content - Bottom Left */}
+      <div className="absolute bottom-20 left-8 md:left-20 z-20 max-w-4xl">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -30, filter: "blur(10px)" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col gap-4"
           >
-            {char === " " ? "\u00A0" : char}
-          </span>
-        ))}
-      </h1>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-aboreto font-bold leading-none tracking-tighter">
+              {slides[currentSlide].title}
+            </h1>
+            <p className="text-xl md:text-3xl text-gray-300 font-light max-w-2xl">
+              {slides[currentSlide].subtitle}
+            </p>
+          </motion.div>
+        </AnimatePresence>
 
-      {/* Third block */}
-      <div className="md:ml-[15%] lg:ml-[40%] flex flex-col-reverse md:flex-row items-center gap-5">
-        <p
-          ref={(el) => {
-            if (el && !pRefs.current.includes(el)) {
-              pRefs.current.push(el);
-            }
-          }}
-          className="hero-text underline opacity-0 translate-y-6"
-        >
-          we design meaningful connections
-        </p>
-        <h1 className="text-7xl md:text-8xl lg:text-9xl font-aboreto overflow-hidden">
-          {"DESIGN".split("").map((char, ci) => (
-            <span
-              key={ci}
-              data-char={char}
-              className="letter inline-block will-change-transform"
-            >
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-        </h1>
+        <div className="flex gap-4 mt-8">
+          <Button href="/selected-projects" variant="outline" className="px-8 py-3">
+            View Project
+          </Button>
+          <Button href="/contact" variant="primary" className="px-8 py-3">
+            Have a Meeting
+          </Button>
+        </div>
       </div>
     </div>
   );

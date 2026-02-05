@@ -37,18 +37,5 @@ export const services = [
       "Museum & Gallery Exhibits",
       "Event Signage & Decor"
     ]
-  },
-  {
-    id: 4,
-    title: "ARCHITECTURAL GRAPHICS",
-    description: "Integrating graphics into architecture to create unique and memorable environments. Blending form and function seamlessly.",
-    details: [
-      "Glass Finishes & Privacy Films",
-      "Dimensional Lettering & Logos",
-      "Wall Murals & Wallcoverings",
-      "Floor Graphics",
-      "Ceiling Graphics",
-      "Architectural Films"
-    ]
-  },
+  }
 ];
