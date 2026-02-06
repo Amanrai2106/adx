@@ -9,7 +9,16 @@ import { ArrowUpRight } from 'lucide-react';
 import TransitionLink from '@/components/TransitionLink';
 import Image from 'next/image';
 
-const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  src: string;
+  color?: string;
+  subCategories?: { id: string; title: string; image: string }[];
+}
+
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   
   const x = useMotionValue(0);

@@ -8,7 +8,14 @@ import { services } from '@/data/services';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import TransitionLink from '@/components/TransitionLink';
 
-const ServiceCard = ({ service, index }: { service: any; index: number }) => {
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  details?: string[];
+}
+
+const ServiceCard = ({ service, index }: { service: Service; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   
   const x = useMotionValue(0);

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { services } from "@/data/services";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -40,7 +40,6 @@ const CoreValues = () => {
     
     // Core parameters for the "Circle"
     // radius is now state-controlled
-    const rotationAngle = 45; // Degrees to rotate each step
     
     // Determine visibility and transform based on offset
     // 0 = Center
@@ -52,8 +51,6 @@ const CoreValues = () => {
     // Maybe Left 1 just for smooth entry/exit.
     
     const isActive = offset === 0;
-    const isRight = offset > 0;
-    const isLeft = offset < 0;
     
     // Calculate 3D Transform
     // x: position horizontally
@@ -67,7 +64,7 @@ const CoreValues = () => {
     
     let opacity = 1;
     let scale = 1;
-    let zIndex = 10 - Math.abs(offset);
+    const zIndex = 10 - Math.abs(offset);
     
     if (isActive) {
         scale = 1;

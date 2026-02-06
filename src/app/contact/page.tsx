@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
-import { Mail, MapPin, Phone, ArrowDownRight } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { countryCodes } from "@/data/countryCodes";
 
 const Contact = () => {
@@ -144,12 +144,12 @@ const Contact = () => {
                 </motion.div>
 
                 <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-10 leading-[0.9]">
-                  Let's <br />
+                  Let&apos;s <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-800 to-gray-500">talk.</span>
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-gray-600 max-w-lg leading-relaxed mb-16 font-light">
-                  Have a project in mind? We'd love to hear about it. Tell us your story and let's build something extraordinary together.
+                  Have a project in mind? We&apos;d love to hear about it. Tell us your story and let&apos;s build something extraordinary together.
                 </p>
                 
                 <div className="space-y-10 border-t border-black/10 pt-10">

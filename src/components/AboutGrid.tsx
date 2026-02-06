@@ -172,16 +172,16 @@ const Clock = () => {
 };
 
 const MapVisualization = React.memo(() => {
-  // Optimized grid resolution for performance
-  const rows = 45;
-  const cols = 90;
-  const width = 800;
-  const height = 400;
-  const cellWidth = width / cols;
-  const cellHeight = height / rows;
-
   // Memoize the dot generation to prevent recalculation on re-renders
   const dots = React.useMemo(() => {
+    // Optimized grid resolution for performance
+    const rows = 45;
+    const cols = 90;
+    const width = 800;
+    const height = 400;
+    const cellWidth = width / cols;
+    const cellHeight = height / rows;
+
     // Detailed world map approximation
     const continents = [
       // North America
@@ -290,6 +290,8 @@ const MapVisualization = React.memo(() => {
     </div>
   );
 });
+
+MapVisualization.displayName = "MapVisualization";
 
 const AboutGrid = () => {
   return (

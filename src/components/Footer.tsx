@@ -134,7 +134,9 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="lg:w-1/4"
             >
-                <img src="/logo.png" alt="Signsol Logo" className="h-28 w-auto brightness-0 mb-8 opacity-90 hover:opacity-100 transition-opacity" />
+                <div className="relative h-28 w-auto mb-8">
+                  <Image src="/logo.png" alt="Signsol Logo" fill className="object-contain object-left brightness-0 opacity-90 hover:opacity-100 transition-opacity" />
+                </div>
                 <p className="text-gray-600 text-lg max-w-xs leading-relaxed">
                     Crafting digital experiences that leave a lasting impression.
                 </p>

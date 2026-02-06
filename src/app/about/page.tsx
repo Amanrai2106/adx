@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, CheckCircle2, Users, Target, Lightbulb } from "lucide-react";
+import { ArrowRight, Users, Target, Lightbulb } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -69,10 +69,10 @@ const AboutPage = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-8">Our Story</h2>
             <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
               <p>
-                Founded with a vision to bridge the gap between aesthetics and functionality, we started as a small collective of designers and developers. Over the years, we've grown into a full-service agency, but our core philosophy remains the same: <span className="text-black font-semibold">Quality over Quantity.</span>
+                Founded with a vision to bridge the gap between aesthetics and functionality, we started as a small collective of designers and developers. Over the years, we&apos;ve grown into a full-service agency, but our core philosophy remains the same: <span className="text-black font-semibold">Quality over Quantity.</span>
               </p>
               <p>
-                We believe that every brand has a unique story to tell. Our job is to tell that story through immersive design, cutting-edge technology, and strategic thinking. We don't just build websites; we build digital legacies.
+                We believe that every brand has a unique story to tell. Our job is to tell that story through immersive design, cutting-edge technology, and strategic thinking. We don&apos;t just build websites; we build digital legacies.
               </p>
             </div>
             
@@ -112,7 +112,7 @@ const AboutPage = () => {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="absolute -bottom-10 -left-10 bg-white/90 backdrop-blur-md p-6 rounded-xl border border-black/10 shadow-2xl max-w-xs hidden md:block"
             >
-              <p className="text-sm text-gray-600 italic">"Design is not just what it looks like and feels like. Design is how it works."</p>
+              <p className="text-sm text-gray-600 italic">&quot;Design is not just what it looks like and feels like. Design is how it works.&quot;</p>
               <p className="text-xs text-gray-500 mt-2">— Steve Jobs</p>
             </motion.div>
           </motion.div>
@@ -137,7 +137,7 @@ const AboutPage = () => {
               {
                 icon: <Target className="w-8 h-8 text-purple-500" />,
                 title: "Precision",
-                desc: "We pay attention to the smallest details because that's where excellence lives."
+                desc: "We pay attention to the smallest details because that&apos;s where excellence lives."
               },
               {
                 icon: <Lightbulb className="w-8 h-8 text-yellow-500" />,
@@ -179,7 +179,7 @@ const AboutPage = () => {
           className="max-w-4xl mx-auto"
         >
           <h2 className="text-4xl md:text-7xl font-bold mb-8">Ready to start?</h2>
-          <p className="text-xl text-gray-600 mb-10">Let's build something amazing together.</p>
+          <p className="text-xl text-gray-600 mb-10">Let&apos;s build something amazing together.</p>
           <TransitionLink href="/contact" className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition-colors group">
             Get in Touch
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

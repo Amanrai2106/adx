@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useRef, useState } from 'react';
+import React, { use, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
@@ -8,7 +8,7 @@ import { services } from '@/data/services';
 import { posts } from '@/data/posts';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import TransitionLink from '@/components/TransitionLink';
 import Image from 'next/image';
 
@@ -142,7 +142,7 @@ export default function ServicePage({ params }: { params: Promise<{ id: string }
                     Ready to transform your space?
                 </h2>
                 <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-                    Let's collaborate to bring the vision of indoor signs to life with precision and creativity.
+                    Let&apos;s collaborate to bring the vision of indoor signs to life with precision and creativity.
                 </p>
                 <Button 
                     href="/contact"

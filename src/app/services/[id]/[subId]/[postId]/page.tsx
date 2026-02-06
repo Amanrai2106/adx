@@ -8,9 +8,8 @@ import TransitionLink from "@/components/TransitionLink";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import GetInTouch from "@/components/GetInTouch";
-import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { ArrowLeft, ArrowRight, ArrowDown, MapPin, Calendar, Building2, Layers } from "lucide-react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { ArrowLeft, ArrowRight, MapPin, Calendar, Building2, Layers } from "lucide-react";
 
 export default function ServicePostPage({ params }: { params: Promise<{ id: string; subId: string; postId: string }> }) {
   const { id, subId, postId } = use(params);
@@ -252,7 +251,7 @@ export default function ServicePostPage({ params }: { params: Promise<{ id: stri
                     <span className="text-orange-500 font-mono text-sm tracking-widest uppercase mb-4">02. The Outcome</span>
                     <h3 className="text-3xl md:text-4xl font-bold mb-6">Delivering Value</h3>
                     <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                        Our comprehensive approach resulted in a solution that integrates perfectly with the client's operations. 
+                        Our comprehensive approach resulted in a solution that integrates perfectly with the client&apos;s operations. 
                         We pride ourselves on delivering results that are both functional and visually impressive.
                     </p>
                     <div className="grid grid-cols-2 gap-8 mt-4">

@@ -11,7 +11,7 @@ const GetInTouch = () => {
     offset: ["start end", "end end"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [-50, 0]);
+  useTransform(scrollYProgress, [0, 1], [-50, 0]);
 
   return (
     <section ref={containerRef} className="bg-black text-white py-24 md:py-32 relative overflow-hidden">
@@ -50,7 +50,7 @@ const GetInTouch = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-xl text-gray-400 max-w-xl leading-relaxed"
             >
-              Let's collaborate to build something exceptional. We help ambitious brands define their physical presence.
+              Let&apos;s collaborate to build something exceptional. We help ambitious brands define their physical presence.
             </motion.p>
           </div>
 

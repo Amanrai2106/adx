@@ -8,9 +8,8 @@ import TransitionLink from "@/components/TransitionLink";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import GetInTouch from "@/components/GetInTouch";
-import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { ArrowLeft, ArrowRight, ArrowDown, MapPin, Calendar, Building2, Layers } from "lucide-react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { ArrowLeft, ArrowRight, MapPin, Calendar, Building2, Layers } from "lucide-react";
 
 export default function ProjectPostPage({ params }: { params: Promise<{ id: string; subId: string; postId: string }> }) {
   const { id, subId, postId } = use(params);

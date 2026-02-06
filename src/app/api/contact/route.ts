@@ -84,15 +84,15 @@ export async function POST(req: Request) {
 
       await transporter.sendMail(mailOptions);
       console.log("Email sent successfully to", process.env.CONTACT_EMAIL);
-    } catch (emailError: any) {
+    } catch (emailError: unknown) {
       console.error("Error sending email:", emailError);
-      return NextResponse.json({ error: `Email Error: ${emailError.message}` }, { status: 500 });
+      return NextResponse.json({ error: `Email Error: ${(emailError as Error).message}` }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true, id: created.id });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error in contact API:", err);
-    return NextResponse.json({ error: `Server Error: ${err.message}` }, { status: 500 });
+    return NextResponse.json({ error: `Server Error: ${(err as Error).message}` }, { status: 500 });
   }
 }
 

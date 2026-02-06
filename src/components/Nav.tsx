@@ -207,8 +207,8 @@ const Nav = () => {
                             >
                                 <X size={32} className="text-white group-hover:text-gray-400 transition-colors" />
                             </button>
-                             <div className="cursor-pointer">
-                                <img src="/logo.png" alt="Signsol Logo" className="h-8 w-auto brightness-0 invert" />
+                             <div className="cursor-pointer relative h-8 w-24">
+                                <Image src="/logo.png" alt="Signsol Logo" fill className="object-contain object-left brightness-0 invert" />
                             </div>
                          </div>
                          
@@ -248,11 +248,12 @@ const Nav = () => {
                                 </div>
                              </div>
 
-                             <div className="w-full mb-48">
-                                 <img 
+                             <div className="w-full mb-48 relative h-32">
+                                 <Image 
                                     src="/logo.png" 
                                     alt="Signsol" 
-                                    className="w-full max-w-full brightness-0 invert"
+                                    fill
+                                    className="object-contain object-left brightness-0 invert"
                                  />
                              </div>
                          </div>
