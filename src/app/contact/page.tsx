@@ -86,7 +86,7 @@ const Contact = () => {
         subject: "",
         message: "",
       });
-    } catch (err) {
+    } catch {
       alert("Network error. Please try again.");
     }
   };
