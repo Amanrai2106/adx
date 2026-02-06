@@ -35,6 +35,7 @@ export const viewport: Viewport = {
 };
 
 import { PageTransitionProvider } from "@/components/PageTransition";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -44,13 +45,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${aboreto.variable} antialiased overflow-x-hidden lg:cursor-none`}>
-        <PageTransitionProvider>
-          <ScrollProvider>
-            <Cursor />
-            {children}
-            <ScrollToTop />
-          </ScrollProvider>
-        </PageTransitionProvider>
+        <Suspense fallback={null}>
+          <PageTransitionProvider>
+            <ScrollProvider>
+              <Cursor />
+              {children}
+              <ScrollToTop />
+            </ScrollProvider>
+          </PageTransitionProvider>
+        </Suspense>
       </body>
     </html>
   );
