@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -20,8 +20,19 @@ const coltBrand = { id: 10, name: "COLT", logo: "", bg: "/dev/p-3.jpeg" };
 const BrandShowcase = () => {
   const [activeBrand, setActiveBrand] = useState(brands[0]);
 
+  // Preload background images
+  useEffect(() => {
+    brands.forEach((brand) => {
+      const img = new window.Image();
+      img.src = brand.bg;
+    });
+    // Preload coltBrand as well
+    const img = new window.Image();
+    img.src = coltBrand.bg;
+  }, []);
+
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#0a0a0a] text-white">
+    <section className="relative h-screen w-full overflow-hidden bg-white text-black">
       {/* Background Layer */}
       <AnimatePresence mode="popLayout">
         <motion.div
@@ -36,10 +47,10 @@ const BrandShowcase = () => {
             src={activeBrand.bg}
             alt={activeBrand.name}
             fill
-            className="object-cover opacity-40 blur-sm"
-            priority
+            className="object-cover opacity-10 blur-sm"
+            sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -49,7 +60,7 @@ const BrandShowcase = () => {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="mb-4 text-sm font-medium uppercase tracking-widest text-gray-400"
+            className="mb-4 text-sm font-medium uppercase tracking-widest text-gray-500"
           >
             Explore & play in games & immersive worlds
           </motion.p>
@@ -57,7 +68,7 @@ const BrandShowcase = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl font-bold leading-tight md:text-7xl"
+            className="text-3xl sm:text-5xl font-bold leading-tight md:text-7xl"
           >
             Discover Brands <br />
             Building On spatial.io
@@ -65,7 +76,7 @@ const BrandShowcase = () => {
         </div>
 
         {/* Brands Grid */}
-        <div className="grid w-full max-w-6xl grid-cols-2 md:grid-cols-5 border-t border-l border-white/10">
+        <div className="grid w-full max-w-6xl grid-cols-2 sm:grid-cols-3 md:grid-cols-5 border-t border-l border-black/10">
           {brands.map((brand, index) => (
             <motion.div
               key={brand.id}
@@ -73,11 +84,11 @@ const BrandShowcase = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className={`group relative flex aspect-[16/9] cursor-pointer items-center justify-center border-r border-b border-white/10 bg-black/20 backdrop-blur-sm transition-all hover:bg-white/10 ${
-                activeBrand.id === brand.id ? "bg-white/20" : ""
+              className={`group relative flex aspect-[16/9] cursor-pointer items-center justify-center border-r border-b border-black/10 bg-white/20 backdrop-blur-sm transition-all hover:bg-black/5 ${
+                activeBrand.id === brand.id ? "bg-black/5" : ""
               }`}
             >
-              <span className="text-xl font-bold tracking-wider text-white/80 group-hover:text-white">
+              <span className="text-xl font-bold tracking-wider text-black/60 group-hover:text-black">
                 {brand.name}
               </span>
               
@@ -85,7 +96,7 @@ const BrandShowcase = () => {
               {activeBrand.id === brand.id && (
                 <motion.div
                   layoutId="active-dot"
-                  className="absolute bottom-4 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_10px_white]"
+                  className="absolute bottom-4 h-1.5 w-1.5 rounded-full bg-black shadow-[0_0_10px_black]"
                 />
               )}
             </motion.div>
@@ -93,17 +104,17 @@ const BrandShowcase = () => {
            {/* Empty/Placeholder Grid Item to complete the layout if needed, or mostly just leave it as dynamic */}
            <div 
              onMouseEnter={() => setActiveBrand(coltBrand)}
-             className={`hidden md:flex aspect-[16/9] border-r border-b border-white/10 bg-black/20 backdrop-blur-sm items-center justify-center cursor-pointer transition-all hover:bg-white/10 ${
-                activeBrand.id === coltBrand.id ? "bg-white/20" : ""
+             className={`hidden md:flex aspect-[16/9] border-r border-b border-black/10 bg-white/20 backdrop-blur-sm items-center justify-center cursor-pointer transition-all hover:bg-black/5 ${
+                activeBrand.id === coltBrand.id ? "bg-black/5" : ""
              }`}
            >
-                <div className="h-16 w-16 rounded-full bg-white/10 flex items-center justify-center relative">
-                    <span className="text-white font-bold text-sm z-10">COLT</span>
+                <div className="h-16 w-16 rounded-full bg-black/5 flex items-center justify-center relative">
+                    <span className="text-black font-bold text-sm z-10">COLT</span>
                 </div>
                 {activeBrand.id === coltBrand.id && (
                     <motion.div
                       layoutId="active-dot"
-                      className="absolute bottom-4 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_10px_white]"
+                      className="absolute bottom-4 h-1.5 w-1.5 rounded-full bg-black shadow-[0_0_10px_black]"
                     />
                 )}
            </div>

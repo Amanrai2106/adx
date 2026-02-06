@@ -2,7 +2,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { projects } from "@/data/projects";
 
 import { Button } from "@/components/ui/Button";
@@ -48,26 +47,32 @@ const Card = ({
           scale,
           top: `calc(-5vh + ${i * 25}px)`,
         }}
-        className="flex flex-col relative -top-[25%] h-[500px] w-[1000px] rounded-[25px] p-12 origin-top border border-white/10 overflow-hidden shadow-2xl"
+        className="flex flex-col relative -top-[25%] h-auto md:h-[500px] w-full md:w-[1000px] rounded-[25px] p-6 md:p-12 origin-top border border-black/10 overflow-hidden shadow-2xl will-change-transform"
       >
-        <div className="flex h-full gap-12">
-          <div className="w-[40%] flex flex-col justify-center">
-            <h2 className="text-4xl font-bold mb-4 text-white">{title}</h2>
-            <p className="text-gray-400 text-lg leading-relaxed">{description}</p>
-            <div className="mt-8">
+        <div className="flex flex-col md:flex-row h-full gap-6 md:gap-12">
+          <div className="w-full md:w-[40%] flex flex-col justify-center order-2 md:order-1">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-black">{title}</h2>
+            <p className="text-gray-600 text-sm md:text-lg leading-relaxed">{description}</p>
+            <div className="mt-6 md:mt-8">
               <Button 
                 href={`/projects/${id}`}
                 variant="outline"
-                className="text-xs px-6 py-3"
+                className="text-xs px-6 py-3 w-full md:w-auto border-black/30 text-black hover:bg-black hover:text-white"
               >
                 VIEW PROJECTS
               </Button>
             </div>
           </div>
 
-          <div className="relative w-[60%] h-full rounded-[20px] overflow-hidden bg-black/50">
+          <div className="relative w-full md:w-[60%] h-[200px] md:h-full rounded-[20px] overflow-hidden bg-white/50 order-1 md:order-2">
             <motion.div style={{ scale: imageScale }} className="w-full h-full">
-              <Image fill src={src} alt={title} className="object-cover" />
+              <Image 
+                fill 
+                src={src} 
+                alt={title} 
+                className="object-cover" 
+                sizes="(max-width: 768px) 100vw, 600px"
+              />
             </motion.div>
           </div>
         </div>
@@ -84,7 +89,7 @@ const ProjectStack = () => {
   });
 
   return (
-    <section id="project-stack" ref={container} className="bg-black relative px-4">
+    <section id="project-stack" ref={container} className="bg-white relative px-4">
       {projects.map((project, i) => {
         const targetScale = 1 - (projects.length - i) * 0.05;
         return (

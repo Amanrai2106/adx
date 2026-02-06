@@ -97,7 +97,7 @@ const Work = () => {
   }, []);
 
   return (
-    <div id="services" ref={containerRef} className="relative z-[400] h-fit p-4">
+    <div id="services" ref={containerRef} className="relative z-[400] h-fit p-4 bg-white text-black">
       {/* heading */}
       <h2 className="text-3xl max-w-[950px] overflow-hidden title">
         <span className="block">Our Services</span>

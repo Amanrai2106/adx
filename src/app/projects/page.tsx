@@ -6,7 +6,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { projects } from '@/data/projects';
 import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link';
+import TransitionLink from '@/components/TransitionLink';
 import Image from 'next/image';
 
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
@@ -42,7 +42,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
       }}
       className="h-[500px] w-full"
     >
-      <Link href={`/projects/${project.id}`} className="block h-full w-full">
+      <TransitionLink href={`/projects/${project.id}`} className="block h-full w-full">
         <motion.div
           ref={ref}
           onMouseMove={onMouseMove}
@@ -52,7 +52,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
             rotateY,
             transformStyle: "preserve-3d",
           }}
-          className="relative h-full w-full rounded-3xl overflow-hidden bg-neutral-900 border border-neutral-800 group cursor-pointer"
+          className="relative h-full w-full rounded-3xl overflow-hidden bg-[#FFFBF2] border border-[#EAE0D5] group cursor-pointer shadow-lg shadow-orange-100/50"
         >
           {/* Background Image with Parallax-like feel */}
           <div className="absolute inset-0 z-0">
@@ -60,9 +60,9 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
               src={project.src}
               alt={project.title}
               fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-40"
+              className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60"
             />
-             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+             <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500" />
           </div>
 
           {/* Hover Glare Effect */}
@@ -71,7 +71,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
               background: useMotionTemplate`
                 radial-gradient(
                   800px circle at ${mouseX}px ${mouseY}px,
-                  rgba(255, 255, 255, 0.1),
+                  rgba(0, 0, 0, 0.05),
                   transparent 80%
                 )
               `,
@@ -82,42 +82,47 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           {/* Content */}
           <div className="relative z-20 h-full p-8 flex flex-col justify-between" style={{ transformStyle: "preserve-3d" }}>
             <div className="flex justify-between items-start">
-              <span className="text-sm font-mono text-white/60 border border-white/20 px-3 py-1 rounded-full backdrop-blur-md">
+              <span className="text-sm font-mono text-black/60 border border-black/10 px-3 py-1 rounded-full backdrop-blur-md bg-white/30">
                 0{index + 1}
               </span>
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 45 }}
-                className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center border border-white/20 backdrop-blur-md group-hover:bg-white group-hover:text-black transition-colors duration-300"
+                className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center border border-black/10 backdrop-blur-md group-hover:bg-black group-hover:text-white transition-colors duration-300"
               >
                 <ArrowUpRight className="w-6 h-6" />
               </motion.div>
             </div>
 
             <div style={{ transform: "translateZ(30px)" }}>
-              <h3 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+              <h3 className="text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight">
                 {project.title}
               </h3>
-              <p className="text-gray-300 text-lg max-w-md line-clamp-3 group-hover:text-white transition-colors duration-300">
+              <p className="text-gray-600 text-lg max-w-md line-clamp-3 group-hover:text-black transition-colors duration-300">
                 {project.description}
               </p>
               
-              <div className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-orange-500 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+              <div className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-orange-600 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                 View Project <ArrowUpRight className="w-4 h-4" />
               </div>
             </div>
           </div>
         </motion.div>
-      </Link>
+      </TransitionLink>
     </motion.div>
   );
 };
 
 export default function ProjectsPage() {
   return (
-    <div className="bg-black min-h-screen text-white selection:bg-orange-500/30">
+    <div className="bg-gray-50 min-h-screen text-black selection:bg-orange-500/30 overflow-hidden relative">
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[10%] right-[5%] w-[40vw] h-[40vw] bg-purple-200/30 rounded-full blur-[100px] opacity-60" />
+        <div className="absolute bottom-[10%] left-[5%] w-[35vw] h-[35vw] bg-blue-200/30 rounded-full blur-[100px] opacity-50" />
+      </div>
+
       <Nav />
       
-      <main className="pt-32 pb-20 px-6 md:px-12 w-full">
+      <main className="pt-32 pb-20 px-6 md:px-12 w-full relative z-10">
         <div className="mb-24 mt-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -132,9 +137,9 @@ export default function ProjectsPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                SELECTED <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">WORKS</span>
+                SELECTED <span className="block text-transparent bg-clip-text bg-gradient-to-r from-black to-gray-400">WORKS</span>
               </motion.h1>
-              <p className="text-xl text-gray-400 max-w-xl leading-relaxed border-l-2 border-orange-500 pl-6">
+              <p className="text-xl text-gray-600 max-w-xl leading-relaxed border-l-2 border-orange-500 pl-6">
                 A showcase of our finest signage and branding projects, demonstrating our commitment to excellence and innovation.
               </p>
             </div>
@@ -146,10 +151,10 @@ export default function ProjectsPage() {
               className="hidden lg:block"
             >
               <div className="relative w-40 h-40">
-                <div className="absolute inset-0 rounded-full border border-white/10 animate-spin-slow" />
+                <div className="absolute inset-0 rounded-full border border-black/10 animate-spin-slow" />
                 <div className="absolute inset-4 rounded-full border border-orange-500/30 animate-spin-reverse-slow" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl font-bold text-white/5">06</span>
+                  <span className="text-6xl font-bold text-black/5">06</span>
                 </div>
               </div>
             </motion.div>

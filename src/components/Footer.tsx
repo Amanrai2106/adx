@@ -1,7 +1,8 @@
 'use client';
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import TransitionLink from "@/components/TransitionLink";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { projects } from "@/data/projects";
 import { services } from "@/data/services";
@@ -32,8 +33,8 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
   };
 
   return (
-    <footer className="bg-[#0f0f0f] text-white min-h-screen flex flex-col justify-between px-6 md:px-20 py-10 border-t border-white/5 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+    <footer className="bg-gray-100 text-black min-h-screen flex flex-col justify-between px-6 md:px-20 py-10 border-t border-black/5 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/20 to-transparent"></div>
       
       <div className="max-w-[1920px] mx-auto w-full flex-grow flex flex-col justify-center">
         {!hideContactCta ? (
@@ -43,9 +44,9 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className="mb-10"
+                className="mb-10 relative h-20 w-40"
               >
-                 <img src="/logo.png" alt="Signsol Logo" className="h-20 w-auto brightness-0 invert" />
+                 <Image src="/logo.png" alt="Signsol Logo" fill className="object-contain brightness-0" />
               </motion.div>
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
@@ -86,7 +87,7 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                       >
-                        <Link href={item.href} className="text-lg hover:text-orange-500 transition-colors">{item.name}</Link>
+                        <TransitionLink href={item.href} className="text-lg hover:text-orange-500 transition-colors">{item.name}</TransitionLink>
                       </motion.li>
                     ))}
                   </ul>
@@ -133,8 +134,8 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="lg:w-1/4"
             >
-                <img src="/logo.png" alt="Signsol Logo" className="h-28 w-auto brightness-0 invert mb-8 opacity-90 hover:opacity-100 transition-opacity" />
-                <p className="text-gray-500 text-lg max-w-xs leading-relaxed">
+                <img src="/logo.png" alt="Signsol Logo" className="h-28 w-auto brightness-0 mb-8 opacity-90 hover:opacity-100 transition-opacity" />
+                <p className="text-gray-600 text-lg max-w-xs leading-relaxed">
                     Crafting digital experiences that leave a lasting impression.
                 </p>
             </motion.div>
@@ -158,7 +159,7 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                       >
-                        <Link href={item.href} className="text-lg hover:text-orange-500 transition-colors">{item.name}</Link>
+                        <TransitionLink href={item.href} className="text-lg hover:text-orange-500 transition-colors">{item.name}</TransitionLink>
                       </motion.li>
                     ))}
                   </ul>
@@ -188,7 +189,7 @@ const Footer = ({ hideContactCta = false }: { hideContactCta?: boolean }) => {
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="text-lg leading-relaxed text-gray-400"
+                      className="text-lg leading-relaxed text-gray-600"
                   >
                       Varun Arcade, Ghodbunder Road, <br />
                       Manpada, Thane West, <br />

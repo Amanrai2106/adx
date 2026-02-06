@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Aboreto } from "next/font/google";
 import "./globals.css";
 import ScrollProvider from "@/hooks/ScrollProvider";
 import ScrollToTop from "@/components/ScrollToTop";
+import Cursor from "@/components/Cursor";
 
 // Inter
 const inter = Inter({
@@ -24,6 +25,17 @@ export const metadata: Metadata = {
   description: "High-impact signage solutions",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#000000",
+  viewportFit: "cover",
+};
+
+import { PageTransitionProvider } from "@/components/PageTransition";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,11 +43,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${aboreto.variable} antialiased`}>
-        <ScrollProvider>
-          {children}
-          <ScrollToTop />
-        </ScrollProvider>
+      <body className={`${inter.variable} ${aboreto.variable} antialiased overflow-x-hidden lg:cursor-none`}>
+        <PageTransitionProvider>
+          <ScrollProvider>
+            <Cursor />
+            {children}
+            <ScrollToTop />
+          </ScrollProvider>
+        </PageTransitionProvider>
       </body>
     </html>
   );

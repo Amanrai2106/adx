@@ -113,11 +113,11 @@ const Contact = () => {
   ];
 
   return (
-    <main className="bg-black min-h-screen text-white relative overflow-hidden selection:bg-orange-500/30 font-sans">
+    <main className="bg-white min-h-screen text-black relative overflow-hidden selection:bg-orange-500/30 font-sans">
       {/* Ambient Background Effects */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-purple-900/20 rounded-full blur-[120px] mix-blend-screen opacity-50" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-900/10 rounded-full blur-[100px] mix-blend-screen opacity-30" />
+          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-purple-200/40 rounded-full blur-[120px] opacity-50" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-200/30 rounded-full blur-[100px] opacity-30" />
       </div>
 
       <Nav />
@@ -137,22 +137,22 @@ const Contact = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
+                    className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-black/5 backdrop-blur-sm"
                 >
                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-xs font-medium tracking-widest uppercase text-gray-300">Available for new projects</span>
+                    <span className="text-xs font-medium tracking-widest uppercase text-gray-700">Available for new projects</span>
                 </motion.div>
 
                 <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-10 leading-[0.9]">
                   Let's <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">talk.</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-800 to-gray-500">talk.</span>
                 </h1>
                 
-                <p className="text-xl md:text-2xl text-gray-400 max-w-lg leading-relaxed mb-16 font-light">
+                <p className="text-xl md:text-2xl text-gray-600 max-w-lg leading-relaxed mb-16 font-light">
                   Have a project in mind? We'd love to hear about it. Tell us your story and let's build something extraordinary together.
                 </p>
                 
-                <div className="space-y-10 border-t border-white/10 pt-10">
+                <div className="space-y-10 border-t border-black/10 pt-10">
                     {contactInfo.map((info, idx) => (
                         <motion.a
                             key={info.label}
@@ -162,12 +162,12 @@ const Contact = () => {
                             transition={{ delay: 0.4 + (idx * 0.1) }}
                             className="group flex items-start gap-6 hover:opacity-100 opacity-70 transition-all duration-300"
                         >
-                            <div className="p-3 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5 group-hover:border-white/20">
+                            <div className="p-3 rounded-full bg-black/5 group-hover:bg-black/10 transition-colors border border-black/5 group-hover:border-black/20">
                                 {info.icon}
                             </div>
                             <div>
                                 <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">{info.label}</h3>
-                                <p className="text-lg md:text-xl font-medium group-hover:text-white transition-colors max-w-xs">{info.value}</p>
+                                <p className="text-lg md:text-xl font-medium group-hover:text-black transition-colors max-w-xs">{info.value}</p>
                             </div>
                         </motion.a>
                     ))}
@@ -182,7 +182,7 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:w-7/12"
           >
-            <form onSubmit={handleSubmit} className="bg-[#0a0a0a] p-8 md:p-16 rounded-[3rem] border border-white/5 shadow-2xl relative overflow-hidden group">
+            <form onSubmit={handleSubmit} className="bg-gray-50 p-8 md:p-16 rounded-[3rem] border border-black/5 shadow-xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-orange-500/5 rounded-full blur-[80px] pointer-events-none group-hover:bg-orange-500/10 transition-colors duration-700" />
                 
                 <div className="space-y-12 relative z-10">
@@ -198,7 +198,7 @@ const Contact = () => {
                                 onChange={handleChange}
                                 onFocus={() => setFocusedField('name')}
                                 onBlur={() => setFocusedField(null)}
-                                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
+                                className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
                                 required
                             />
                         </div>
@@ -213,7 +213,7 @@ const Contact = () => {
                                 onChange={handleChange}
                                 onFocus={() => setFocusedField('email')}
                                 onBlur={() => setFocusedField(null)}
-                                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
+                                className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
                                 required
                             />
                         </div>
@@ -229,10 +229,10 @@ const Contact = () => {
                                 name="countryCode"
                                 value={formData.countryCode}
                                 onChange={handleChange}
-                                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer"
+                                className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer"
                              >
                                 {countryCodes.map((c) => (
-                                    <option key={c.code} value={c.dial_code} className="bg-black text-white">
+                                    <option key={c.code} value={c.dial_code} className="bg-white text-black">
                                         {c.name} ({c.dial_code})
                                     </option>
                                 ))}
@@ -249,7 +249,7 @@ const Contact = () => {
                                 onChange={handleChange}
                                 onFocus={() => setFocusedField('phone')}
                                 onBlur={() => setFocusedField(null)}
-                                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
+                                className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
                                 required
                             />
                         </div>
@@ -267,12 +267,12 @@ const Contact = () => {
                                 onChange={(e) => {
                                     setFormData({ ...formData, category: e.target.value, subCategory: "" });
                                 }}
-                                className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer"
+                                className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer"
                                 required
                              >
-                                <option value="" disabled className="bg-black text-gray-500"></option>
+                                <option value="" disabled className="bg-white text-gray-500"></option>
                                 {Object.keys(categories).map((cat) => (
-                                    <option key={cat} value={cat} className="bg-black text-white">{cat}</option>
+                                    <option key={cat} value={cat} className="bg-white text-black">{cat}</option>
                                 ))}
                              </select>
                         </div>
@@ -286,12 +286,12 @@ const Contact = () => {
                                 value={formData.subCategory}
                                 onChange={handleChange}
                                 disabled={!formData.category}
-                                className={`w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer ${!formData.category ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer ${!formData.category ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 required
                              >
-                                <option value="" disabled className="bg-black text-gray-500"></option>
+                                <option value="" disabled className="bg-white text-gray-500"></option>
                                 {formData.category && categories[formData.category as keyof typeof categories].map((sub) => (
-                                    <option key={sub} value={sub} className="bg-black text-white">{sub}</option>
+                                    <option key={sub} value={sub} className="bg-white text-black">{sub}</option>
                                 ))}
                              </select>
                         </div>
@@ -308,7 +308,7 @@ const Contact = () => {
                             onChange={handleChange}
                             onFocus={() => setFocusedField('subject')}
                             onBlur={() => setFocusedField(null)}
-                            className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
+                            className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors"
                         />
                     </div>
 
@@ -323,7 +323,7 @@ const Contact = () => {
                             onFocus={() => setFocusedField('message')}
                             onBlur={() => setFocusedField(null)}
                             rows={4}
-                            className="w-full bg-transparent border-b border-white/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors resize-none leading-relaxed"
+                            className="w-full bg-transparent border-b border-black/20 py-4 text-xl focus:outline-none focus:border-orange-500 transition-colors resize-none leading-relaxed"
                             required
                         />
                     </div>

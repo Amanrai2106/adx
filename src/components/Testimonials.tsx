@@ -76,7 +76,7 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative p-6">
+    <div ref={containerRef} className="relative p-6 bg-white text-black">
       {/* heading */}
       <div className=" flex flex-col md:flex-row gap-5 md:gap-20 mb-10 p-2">
         <h2 className="text-3xl max-w-[950px] overflow-hidden Testimonials">
@@ -106,7 +106,7 @@ const Testimonials = () => {
                 alt=""
                 width={64}
                 height={64}
-                className="size-16 mb-6"
+                className="size-16 mb-6 invert"
               />
               <p className="text-lg sm:text-xl md:text-3xl font-medium leading-snug mb-6  pr-4 sm:pr-16">
                 “{review.quote}”

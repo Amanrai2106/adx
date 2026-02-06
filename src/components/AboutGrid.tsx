@@ -26,51 +26,48 @@ const ScrollRotateCard = ({ children, className }: { children: React.ReactNode; 
   );
 };
 
-const MailIcon = () => (
+const MailIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    className={className}
   >
     <rect width="20" height="16" x="2" y="4" rx="2" />
     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
   </svg>
 );
 
-const GithubIcon = () => (
+const GithubIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    className={className}
   >
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
 
-const XIcon = () => (
+const XIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    className={className}
   >
     <path d="M18 6 6 18" />
     <path d="m6 6 12 12" />
@@ -113,7 +110,7 @@ const Clock = () => {
   const hours = time ? time.getHours() : 0;
 
   return (
-    <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-gray-800 bg-[#0a0a0a] shadow-2xl overflow-hidden">
+    <div className="relative w-[clamp(12rem,20vw,16rem)] h-[clamp(12rem,20vw,16rem)] rounded-full border-4 border-gray-200 bg-white shadow-2xl overflow-hidden">
       {/* Clock Face Markers - Responsive */}
       <div className="absolute inset-0">
         {[...Array(12)].map((_, i) => (
@@ -124,19 +121,19 @@ const Clock = () => {
               transform: `rotate(${i * 30}deg)`,
             }}
           >
-             <div className="w-1 h-3 bg-gray-600 mx-auto mt-2" />
+             <div className="w-1 h-3 bg-gray-300 mx-auto mt-2" />
           </div>
         ))}
       </div>
       
       {/* Center Dot */}
-      <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 z-20 shadow-md" />
+      <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-black rounded-full -translate-x-1/2 -translate-y-1/2 z-20 shadow-md" />
 
       {/* Hands Container - ensures centering */}
       <div className="absolute inset-0 z-10" style={{ opacity: time ? 1 : 0, transition: 'opacity 0.2s' }}>
           {/* Hour Hand */}
           <div
-            className="absolute w-1.5 bg-white rounded-full"
+            className="absolute w-1.5 bg-black rounded-full"
             style={{
               height: "25%",
               bottom: "50%",
@@ -148,7 +145,7 @@ const Clock = () => {
           
           {/* Minute Hand */}
           <div
-            className="absolute w-1 bg-gray-400 rounded-full"
+            className="absolute w-1 bg-gray-600 rounded-full"
             style={{
               height: "35%",
               bottom: "50%",
@@ -296,51 +293,51 @@ const MapVisualization = React.memo(() => {
 
 const AboutGrid = () => {
   return (
-    <section id="about-grid" className="bg-black text-white font-inter">
+    <section id="about-grid" className="bg-white text-black font-inter">
       <div className="w-full flex flex-col">
         <div className="flex flex-col w-full">
           {/* Card 2: About Us (Merged with Profile) */}
           <ScrollRotateCard
-            className="w-full min-h-screen flex flex-col bg-[#0a0a0a] p-8 md:p-20 border-b border-white/5"
+            className="w-full min-h-screen flex flex-col bg-gray-50 p-8 md:p-20 border-b border-black/5"
           >
             {/* Merged Profile Header */}
-             <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-20 border-b border-white/5 pb-10">
+             <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-20 border-b border-black/5 pb-8 md:pb-10">
                 <div>
-                  <h2 className="text-4xl md:text-6xl font-bold mb-4 font-aboreto text-white">Signsol Design</h2>
-                  <p className="text-gray-400 text-lg flex items-center gap-2">
+                  <h2 className="text-[clamp(2rem,5vw,4rem)] font-bold mb-4 font-aboreto text-black">Signsol Design</h2>
+                  <p className="text-gray-600 text-[clamp(1rem,1.5vw,1.25rem)] flex items-center gap-2">
                     <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
                     THANE, IN • <TimeDisplay />
                   </p>
                 </div>
-                <div className="flex gap-6 mt-8 md:mt-0">
-                  <div className="p-4 bg-white/5 rounded-full hover:bg-white/10 cursor-pointer transition-colors">
-                    <MailIcon />
+                <div className="flex gap-4 md:gap-6 mt-8 md:mt-0">
+                  <div className="p-3 md:p-4 bg-black/5 rounded-full hover:bg-black/10 cursor-pointer transition-colors">
+                    <MailIcon className="w-[clamp(1.25rem,2vw,1.5rem)] h-[clamp(1.25rem,2vw,1.5rem)]" />
                   </div>
-                  <div className="p-4 bg-white/5 rounded-full hover:bg-white/10 cursor-pointer transition-colors">
-                    <GithubIcon />
+                  <div className="p-3 md:p-4 bg-black/5 rounded-full hover:bg-black/10 cursor-pointer transition-colors">
+                    <GithubIcon className="w-[clamp(1.25rem,2vw,1.5rem)] h-[clamp(1.25rem,2vw,1.5rem)]" />
                   </div>
-                  <div className="p-4 bg-white/5 rounded-full hover:bg-white/10 cursor-pointer transition-colors">
-                    <XIcon />
+                  <div className="p-3 md:p-4 bg-black/5 rounded-full hover:bg-black/10 cursor-pointer transition-colors">
+                    <XIcon className="w-[clamp(1.25rem,2vw,1.5rem)] h-[clamp(1.25rem,2vw,1.5rem)]" />
                   </div>
                 </div>
              </div>
 
             <div className="w-full flex flex-col justify-center flex-grow">
-              <h3 className="text-5xl md:text-8xl font-bold mb-12">
+              <h3 className="text-[clamp(2.5rem,8vw,6rem)] font-bold mb-8 md:mb-12 leading-[0.9]">
                 About <span className="text-gray-500 italic font-serif">Us.</span>
               </h3>
-              <p className="text-gray-400 mb-12 leading-relaxed text-xl md:text-3xl max-w-none">
-                Welcome to <strong className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Signsol Design</strong>, your premier destination for highly creative and professional signage design solutions. We collaborate with top <span className="text-white italic font-serif">architectural companies</span> pan India and specialize in providing turn-key solutions for all your exterior and interior signage strategy and designing needs.
+              <p className="text-gray-600 mb-8 md:mb-12 leading-relaxed text-[clamp(1.125rem,2vw,1.875rem)] max-w-none">
+                Welcome to <strong className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">Signsol Design</strong>, your premier destination for highly creative and professional signage design solutions. We collaborate with top <span className="text-black italic font-serif">architectural companies</span> pan India and specialize in providing turn-key solutions for all your exterior and interior signage strategy and designing needs.
               </p>
-              <p className="text-gray-400 mb-16 leading-relaxed text-xl md:text-3xl max-w-none">
+              <p className="text-gray-600 mb-12 md:mb-16 leading-relaxed text-[clamp(1.125rem,2vw,1.875rem)] max-w-none">
                  Our highly qualified and experienced team of visualizers, designers, and craftsmen are dedicated to creating <strong className="text-orange-400 font-serif italic">artistic yet functional designs</strong>. We excel in adapting our sign systems to perfectly match the &apos;look and feel&apos; of our client&apos;s brands.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 md:gap-4">
                 {["Wayfinding", "Signage Strategy", "Experiential Design", "Turn-key Solutions", "Pan India", "Brand Adaptation"].map(
                   (tag, i) => (
                     <span
                       key={i}
-                      className="px-8 py-3 bg-white/5 rounded-full text-lg text-gray-300 border border-white/5 hover:border-white/20 transition-colors cursor-default"
+                      className="px-6 md:px-8 py-2 md:py-3 bg-black/5 rounded-full text-[clamp(0.875rem,1.2vw,1.125rem)] text-gray-600 border border-black/5 hover:border-black/20 transition-colors cursor-default"
                     >
                       {tag}
                     </span>
@@ -353,29 +350,29 @@ const AboutGrid = () => {
 
         {/* Card 3: Design Philosophy */}
         <ScrollRotateCard
-          className="w-full min-h-screen bg-[#0f0f0f] p-8 md:p-20 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-16 overflow-hidden"
+          className="w-full min-h-screen bg-gray-100 p-8 md:p-20 border-b border-black/5 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 overflow-hidden"
         >
           <div className="flex-1 z-10 w-full">
-            <p className="text-base font-bold text-gray-500 mb-6 uppercase tracking-widest">
+            <p className="text-[clamp(0.875rem,1.5vw,1rem)] font-bold text-gray-500 mb-6 uppercase tracking-widest">
               Our Approach
             </p>
-            <h3 className="text-6xl md:text-9xl font-bold mb-12 leading-tight">
+            <h3 className="text-[clamp(3rem,8vw,7rem)] font-bold mb-8 md:mb-12 leading-tight">
               Meaningful <span className="text-orange-500 italic font-serif">connections.</span>
             </h3>
-            <p className="text-gray-400 mb-12 w-full text-xl md:text-3xl">
+            <p className="text-gray-600 mb-8 md:mb-12 w-full text-[clamp(1.125rem,2vw,1.875rem)]">
               From Experiential Design to wayfinding, we design meaningful connections between people and places.
             </p>
-            <ul className="space-y-6 text-gray-400 text-xl md:text-2xl">
-              <li className="flex items-center gap-4">
-                <span className="w-3 h-3 bg-orange-500 rounded-full"></span>
+            <ul className="space-y-4 md:space-y-6 text-gray-600 text-[clamp(1.125rem,1.5vw,1.5rem)]">
+              <li className="flex items-center gap-3 md:gap-4">
+                <span className="w-[clamp(0.5rem,1vw,0.75rem)] h-[clamp(0.5rem,1vw,0.75rem)] bg-orange-500 rounded-full"></span>
                 Turn-key Solutions
               </li>
-              <li className="flex items-center gap-4">
-                <span className="w-3 h-3 bg-orange-500 rounded-full"></span>
+              <li className="flex items-center gap-3 md:gap-4">
+                <span className="w-[clamp(0.5rem,1vw,0.75rem)] h-[clamp(0.5rem,1vw,0.75rem)] bg-orange-500 rounded-full"></span>
                 System Production Efficiency
               </li>
-              <li className="flex items-center gap-4">
-                <span className="w-3 h-3 bg-orange-500 rounded-full"></span>
+              <li className="flex items-center gap-3 md:gap-4">
+                <span className="w-[clamp(0.5rem,1vw,0.75rem)] h-[clamp(0.5rem,1vw,0.75rem)] bg-orange-500 rounded-full"></span>
                 Brand-Aligned Aesthetics
               </li>
             </ul>
@@ -387,22 +384,22 @@ const AboutGrid = () => {
 
         {/* Card 4: Pan India Presence */}
         <ScrollRotateCard
-          className="w-full min-h-screen bg-[#0a0a0a] p-8 md:p-20 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-16 relative overflow-hidden"
+          className="w-full min-h-screen bg-gray-50 p-8 md:p-20 border-b border-black/5 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 relative overflow-hidden"
         >
           <div className="flex-1 z-10 w-full">
-             <p className="text-base font-bold text-gray-500 mb-6 uppercase tracking-widest">
+             <p className="text-[clamp(0.875rem,1.5vw,1rem)] font-bold text-gray-500 mb-6 uppercase tracking-widest">
               Service Reach
             </p>
-            <h3 className="text-6xl md:text-9xl font-bold mb-10 leading-tight">
+            <h3 className="text-[clamp(3rem,8vw,7rem)] font-bold mb-8 md:mb-10 leading-tight">
               Collaborating with <br />
               <span className="text-gray-500">top architects</span>
             </h3>
-            <p className="text-gray-400 mb-12 w-full text-xl md:text-3xl">
-              We provide turn-key signage solutions for projects <u className="text-white decoration-gray-600">pan India</u>. From strategy to installation, we ensure your vision is executed flawlessly across any location.
+            <p className="text-gray-600 mb-8 md:mb-12 w-full text-[clamp(1.125rem,2vw,1.875rem)]">
+              We provide turn-key signage solutions for projects <u className="text-black decoration-gray-400">pan India</u>. From strategy to installation, we ensure your vision is executed flawlessly across any location.
             </p>
-            <div className="inline-flex items-center gap-4 px-8 py-4 bg-orange-900/20 text-orange-400 rounded-full border border-orange-900/50 text-lg font-medium">
-               <span className="w-6 h-6 rounded-full border border-orange-400/50 flex items-center justify-center">
-                   <span className="w-3 h-3 bg-orange-400 rounded-full"></span>
+            <div className="inline-flex items-center gap-3 md:gap-4 px-[clamp(1.5rem,2vw,2rem)] py-[clamp(0.75rem,1vw,1rem)] bg-orange-500/10 text-orange-600 rounded-full border border-orange-500/20 text-[clamp(1rem,1.5vw,1.125rem)] font-medium">
+               <span className="w-[clamp(1.25rem,1.5vw,1.5rem)] h-[clamp(1.25rem,1.5vw,1.5rem)] rounded-full border border-orange-500/50 flex items-center justify-center">
+                   <span className="w-[clamp(0.5rem,0.75vw,0.75rem)] h-[clamp(0.5rem,0.75vw,0.75rem)] bg-orange-500 rounded-full"></span>
                </span>
                Nationwide Service
             </div>

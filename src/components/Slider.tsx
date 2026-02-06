@@ -86,6 +86,7 @@ const Slider = () => {
           alt="custom cursor"
           width={40}
           height={40}
+          className="invert"
           style={{
             position: "fixed",
             left: cursorPos.x,

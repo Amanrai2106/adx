@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import TransitionLink from "@/components/TransitionLink";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { X, ArrowRight, Instagram, Linkedin, Twitter, Dribbble } from "lucide-react";
@@ -130,7 +131,7 @@ const Nav = () => {
           }}
           animate={hidden ? "hidden" : "visible"}
           transition={{ duration: 0.35, ease: "easeInOut" }}
-          className={`fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12 py-5 flex justify-between items-center transition-colors duration-500 ${isScrolledPastAbout ? "bg-black/90 backdrop-blur-sm border-b border-white/10" : ""}`}
+          className={`fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12 py-5 flex justify-between items-center transition-colors duration-500 ${isScrolledPastAbout ? "bg-white/90 backdrop-blur-sm border-b border-black/10" : ""}`}
         >
           {/* Left Side: Menu Toggle & Logo */}
           <div className="flex items-center gap-6">
@@ -139,25 +140,28 @@ const Nav = () => {
                 className="group flex items-center gap-3 cursor-pointer outline-none"
               >
                   <div className="flex flex-col gap-1.5 w-8">
-                      <span className={`block w-full h-[2px] transition-colors bg-white group-hover:bg-gray-300`}></span>
-                      <span className={`block w-2/3 h-[2px] transition-colors group-hover:w-full bg-white group-hover:bg-gray-300`}></span>
+                      <span className={`block w-full h-[2px] transition-colors bg-black group-hover:bg-gray-600`}></span>
+                      <span className={`block w-2/3 h-[2px] transition-colors group-hover:w-full bg-black group-hover:bg-gray-600`}></span>
                   </div>
               </button>
 
-              <Link href="/">
+              <TransitionLink href="/">
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="cursor-pointer"
+                  className="cursor-pointer relative h-16 w-44"
                 >
-                  <img 
+                  <Image 
                     src="/logo.png" 
                     alt="Signsol Logo" 
-                    className="h-8 w-auto brightness-0 invert"
+                    fill
+                    className="object-contain brightness-0"
+                    sizes="(max-width: 768px) 120px, 180px"
+                    priority
                   />
                 </motion.div>
-              </Link>
+              </TransitionLink>
           </div>
 
           {/* Right Side: CTA Buttons */}
@@ -165,12 +169,12 @@ const Nav = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center gap-4"
+            className="flex items-center gap-2 sm:gap-4"
           >
             <Button 
                 href="/services" 
                 variant="outline"
-                className={`hidden md:inline-flex px-6 py-2.5 text-xs hover:bg-white hover:text-black hover:border-white`}
+                className={`hidden md:inline-flex px-6 py-2.5 text-xs hover:bg-black hover:text-white hover:border-black border-black text-black`}
             >
                 Our Services
             </Button>
@@ -178,7 +182,7 @@ const Nav = () => {
             <Button 
                 href={getContactHref()} 
                 variant="primary"
-                className={`px-6 py-2.5 text-xs hover:bg-orange-500 hover:text-white hover:border-orange-500`}
+                className={`hidden md:inline-flex px-6 py-2.5 text-xs hover:bg-orange-600 hover:text-white hover:border-orange-600`}
             >
                 Have a Meeting
             </Button>
@@ -192,7 +196,7 @@ const Nav = () => {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="fixed inset-0 bg-[#111111] z-[10000] flex flex-col text-white h-screen w-screen overflow-hidden"
+                    className="fixed inset-0 bg-black z-[10000] flex flex-col text-white h-[100dvh] w-full overflow-hidden"
                 >
                     {/* Menu Header */}
                     <div className="flex justify-between items-center px-6 md:px-12 py-5">
@@ -201,7 +205,7 @@ const Nav = () => {
                                 onClick={toggleMenu} 
                                 className="group flex items-center gap-3 cursor-pointer outline-none"
                             >
-                                <X size={32} className="text-white group-hover:text-gray-300 transition-colors" />
+                                <X size={32} className="text-white group-hover:text-gray-400 transition-colors" />
                             </button>
                              <div className="cursor-pointer">
                                 <img src="/logo.png" alt="Signsol Logo" className="h-8 w-auto brightness-0 invert" />
@@ -213,7 +217,7 @@ const Nav = () => {
                                 href="/services" 
                                 variant="outline" 
                                 onClick={toggleMenu}
-                                className="px-6 py-2.5 text-xs hover:bg-white hover:text-black hover:border-white"
+                                className="px-6 py-2.5 text-xs hover:bg-white hover:text-black hover:border-white border-white text-white"
                             >
                                 Our Services
                             </Button>
@@ -221,7 +225,7 @@ const Nav = () => {
                                 href={getContactHref()} 
                                 variant="outline" 
                                 onClick={toggleMenu}
-                                className="px-6 py-2.5 text-xs hover:bg-orange-500 hover:text-white hover:border-orange-500"
+                                className="px-6 py-2.5 text-xs hover:bg-orange-600 hover:text-white hover:border-orange-600 border-white text-white"
                             >
                                 Have a Meeting
                             </Button>
@@ -237,10 +241,10 @@ const Nav = () => {
                                 <p className="text-white font-bold text-xl">Social Media Handles</p>
                                 
                                 <div className="flex gap-4 mt-8">
-                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Instagram size={20} /></a>
-                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Twitter size={20} /></a>
-                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Linkedin size={20} /></a>
-                                    <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/20 transition-colors"><Dribbble size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"><Instagram size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"><Twitter size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"><Linkedin size={20} /></a>
+                                    <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"><Dribbble size={20} /></a>
                                 </div>
                              </div>
 
@@ -270,14 +274,14 @@ const Nav = () => {
                                         custom={i}
                                         className="text-right overflow-hidden"
                                      >
-                                        <Link 
+                                        <TransitionLink 
                                             href={link.href} 
                                             onClick={toggleMenu}
                                             className="group relative flex items-center justify-end gap-4 text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white/90 hover:text-white transition-colors uppercase"
                                         >
-                                            <ArrowRight className="w-8 h-8 md:w-12 md:h-12 text-orange-500 opacity-0 -translate-x-8 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out" />
+                                            <ArrowRight className="w-8 h-8 md:w-12 md:h-12 text-orange-600 opacity-0 -translate-x-8 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out" />
                                             <span>{link.name}</span>
-                                        </Link>
+                                        </TransitionLink>
                                      </motion.div>
                                  ))}
                              </motion.div>

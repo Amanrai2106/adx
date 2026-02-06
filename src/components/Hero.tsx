@@ -34,6 +34,14 @@ const Hero = () => {
   const imageIndex = useRef(0);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Preload images
+  useEffect(() => {
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -129,24 +137,25 @@ const Hero = () => {
     <div
       id="home"
       ref={containerRef}
-      className="relative z-10 h-screen text-white overflow-hidden bg-black"
+      className="relative z-10 w-full h-[100dvh] text-black overflow-hidden bg-black"
     >
       {/* Background Video */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 w-full h-full -z-10">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full object-cover block"
         >
           <source src="/bg.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Overlay to ensure text readability if needed, or just dark bg fallback */}
+        <div className="absolute inset-0 bg-black/10" />
       </div>
 
       {/* Rotating Content - Bottom Left */}
-      <div className="absolute bottom-20 left-8 md:left-20 z-20 max-w-4xl">
+      <div className="absolute bottom-20 left-0 right-0 px-6 md:px-20 z-20 w-full md:w-auto md:max-w-4xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -154,22 +163,22 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -30, filter: "blur(10px)" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-2 md:gap-4"
           >
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-aboreto font-bold leading-none tracking-tighter">
+            <h1 className="text-3xl sm:text-4xl md:text-8xl lg:text-9xl font-aboreto font-bold leading-none tracking-tighter break-words text-white">
               {slides[currentSlide].title}
             </h1>
-            <p className="text-xl md:text-3xl text-gray-300 font-light max-w-2xl">
+            <p className="text-base sm:text-lg md:text-3xl text-gray-200 font-light max-w-2xl">
               {slides[currentSlide].subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="flex gap-4 mt-8">
-          <Button href="/selected-projects" variant="outline" className="px-8 py-3">
+        <div className="flex flex-col sm:flex-row gap-4 mt-6 md:mt-8">
+          <Button href="/projects" variant="outline" className="px-8 py-3 w-full sm:w-auto text-center justify-center">
             View Project
           </Button>
-          <Button href="/contact" variant="primary" className="px-8 py-3">
+          <Button href="/contact" variant="primary" className="px-8 py-3 w-full sm:w-auto text-center justify-center">
             Have a Meeting
           </Button>
         </div>

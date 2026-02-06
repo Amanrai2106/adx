@@ -46,7 +46,7 @@ const About = () => {
   }, []);
 
   return (
-    <div id="about" ref={containerRef} className="min-h-screen p-4 lg:p-10">
+    <div id="about" ref={containerRef} className="min-h-screen p-4 lg:p-10 bg-white text-black">
       {/* heading */}
       <h2 className="text-3xl lg:text-4xl max-w-[950px] mt-10">
         <span className="inline-block text-xl font-medium -translate-y-5 mr-20 lg:mr-[400px] overflow-hidden title">

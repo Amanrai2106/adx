@@ -2,12 +2,24 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { services } from "@/data/services";
-import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const CoreValues = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [radius, setRadius] = useState(400);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setRadius(window.innerWidth < 768 ? 200 : 400);
+    };
+    
+    // Set initial value
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % services.length);
@@ -27,7 +39,7 @@ const CoreValues = () => {
     // "ek card front... uske ek right side mein ek background circle form mein"
     
     // Core parameters for the "Circle"
-    const radius = 400; // Distance from center
+    // radius is now state-controlled
     const rotationAngle = 45; // Degrees to rotate each step
     
     // Determine visibility and transform based on offset
@@ -80,13 +92,13 @@ const CoreValues = () => {
   };
 
   return (
-    <section className="bg-black min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 relative perspective-1000">
+    <section className="bg-white min-h-screen flex flex-col items-center justify-center overflow-hidden py-20 relative perspective-1000">
       
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-900 via-black to-black pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-100 via-white to-white pointer-events-none" />
 
       <div className="relative z-10 text-center mb-16 px-4">
-        <h2 className="text-4xl md:text-7xl font-bold text-white mb-4 tracking-tight">
+        <h2 className="text-4xl md:text-7xl font-bold text-black mb-4 tracking-tight">
           Our Services
         </h2>
         <p className="text-sm font-bold tracking-[0.3em] text-gray-500 uppercase">
@@ -106,7 +118,7 @@ const CoreValues = () => {
                 return (
                     <motion.div
                         key={service.id}
-                        className="absolute top-1/2 left-1/2 w-[350px] md:w-[450px] h-[550px] -ml-[175px] md:-ml-[225px] -mt-[275px]"
+                        className="absolute top-1/2 left-1/2 w-[85vw] max-w-[350px] md:w-[450px] h-[500px] md:h-[550px] -translate-x-1/2 -translate-y-1/2"
                         initial={false}
                         animate={{
                             x,
@@ -130,17 +142,17 @@ const CoreValues = () => {
                         <div 
                             className={`w-full h-full rounded-[2rem] p-8 md:p-10 flex flex-col justify-between transition-all duration-500 border ${
                                 isActive 
-                                    ? "bg-neutral-900 border-white/20 shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)]" 
-                                    : "bg-neutral-950 border-white/5 shadow-xl brightness-50 grayscale-[50%]"
+                                    ? "bg-white border-black/10 shadow-[0_0_50px_-10px_rgba(0,0,0,0.1)]" 
+                                    : "bg-gray-50 border-black/5 shadow-xl brightness-95 grayscale-[50%]"
                             }`}
                         >
                             {/* Header */}
                             <div className="flex justify-between items-start">
-                                <span className={`text-6xl font-black ${isActive ? "text-white/20" : "text-white/5"}`}>
+                                <span className={`text-6xl font-black ${isActive ? "text-black/10" : "text-black/5"}`}>
                                     0{service.id}
                                 </span>
                                 {isActive && (
-                                    <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center animate-pulse">
+                                    <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center animate-pulse">
                                         <ArrowRight size={20} className="-rotate-45" />
                                     </div>
                                 )}
@@ -148,10 +160,10 @@ const CoreValues = () => {
 
                             {/* Body */}
                             <div>
-                                <h3 className={`text-3xl md:text-4xl font-bold mb-6 leading-tight ${isActive ? "text-white" : "text-gray-400"}`}>
+                                <h3 className={`text-3xl md:text-4xl font-bold mb-6 leading-tight ${isActive ? "text-black" : "text-gray-500"}`}>
                                     {service.title}
                                 </h3>
-                                <p className={`text-sm md:text-base leading-relaxed ${isActive ? "text-gray-400" : "text-gray-600"}`}>
+                                <p className={`text-sm md:text-base leading-relaxed ${isActive ? "text-gray-600" : "text-gray-400"}`}>
                                     {service.description}
                                 </p>
                             </div>
@@ -166,7 +178,7 @@ const CoreValues = () => {
                                     View Details
                                 </Button>
                             ) : (
-                                <div className="w-full py-4 rounded-xl font-bold text-sm tracking-wider uppercase flex items-center justify-center bg-white/5 text-gray-500 cursor-not-allowed border border-transparent">
+                                <div className="w-full py-4 rounded-xl font-bold text-sm tracking-wider uppercase flex items-center justify-center bg-black/5 text-gray-400 cursor-not-allowed border border-transparent">
                                     Locked
                                 </div>
                             )}
@@ -180,7 +192,7 @@ const CoreValues = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] md:w-[700px] flex justify-between z-50 pointer-events-none">
             <button
                 onClick={prevSlide}
-                className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 pointer-events-auto hover:scale-110 active:scale-95 group"
+                className="w-16 h-16 rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 pointer-events-auto hover:scale-110 active:scale-95 group shadow-lg"
                 aria-label="Previous Service"
             >
                 <ChevronLeft size={32} className="mr-1" />
@@ -188,7 +200,7 @@ const CoreValues = () => {
 
             <button
                 onClick={nextSlide}
-                className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 pointer-events-auto hover:scale-110 active:scale-95 group"
+                className="w-16 h-16 rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-black flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 pointer-events-auto hover:scale-110 active:scale-95 group shadow-lg"
                 aria-label="Next Service"
             >
                 <ChevronRight size={32} className="ml-1" />
@@ -202,7 +214,7 @@ const CoreValues = () => {
                 key={idx}
                 onClick={() => setActiveIndex(idx)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    idx === activeIndex ? "bg-white w-8" : "bg-white/20 hover:bg-white/50"
+                    idx === activeIndex ? "bg-black w-8" : "bg-black/20 hover:bg-black/50"
                 }`}
             />
         ))}

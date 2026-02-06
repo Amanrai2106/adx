@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { services } from '@/data/services';
-import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowUpRight, Sparkles } from 'lucide-react';
+import TransitionLink from '@/components/TransitionLink';
 
 const ServiceCard = ({ service, index }: { service: any; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +50,7 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="relative h-full w-full rounded-3xl bg-neutral-900 border border-neutral-800 p-8 flex flex-col justify-between group cursor-pointer hover:border-orange-500/50 transition-colors duration-500"
+        className="relative h-full w-full rounded-3xl bg-white border border-gray-200 p-8 flex flex-col justify-between group cursor-pointer hover:border-orange-500 transition-all duration-500 shadow-xl shadow-gray-200/50 overflow-hidden"
       >
         {/* Hover Gradient Effect */}
         <motion.div
@@ -58,48 +58,48 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
             background: useMotionTemplate`
               radial-gradient(
                 650px circle at ${mouseX}px ${mouseY}px,
-                rgba(255, 165, 0, 0.1),
+                rgba(249, 115, 22, 0.05),
                 transparent 80%
               )
             `,
           }}
-          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
         />
 
         <div className="relative z-10" style={{ transformStyle: "preserve-3d" }}>
           <div className="flex justify-between items-start mb-8">
-            <span className="text-sm font-mono text-orange-500/80 border border-orange-500/20 px-3 py-1 rounded-full backdrop-blur-sm">
+            <span className="text-sm font-mono text-orange-600 border border-orange-500/20 px-3 py-1 rounded-full bg-orange-50">
               0{service.id}
             </span>
             <motion.div
               whileHover={{ scale: 1.1, rotate: 45 }}
-              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-orange-500 group-hover:text-black group-hover:border-orange-500 transition-colors duration-300"
+              className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors duration-300"
             >
               <ArrowUpRight className="w-5 h-5" />
             </motion.div>
           </div>
 
           <h3 
-            className="text-3xl font-bold text-white mb-4 group-hover:text-orange-500 transition-colors duration-300"
+            className="text-3xl font-bold text-black mb-4 group-hover:text-orange-600 transition-colors duration-300 uppercase tracking-tight"
             style={{ transform: "translateZ(20px)" }}
           >
             {service.title}
           </h3>
           
           <p 
-            className="text-gray-400 mb-8 leading-relaxed text-sm md:text-base"
+            className="text-gray-600 mb-8 leading-relaxed text-sm md:text-base"
             style={{ transform: "translateZ(10px)" }}
           >
             {service.description}
           </p>
 
           <div 
-            className="space-y-3 pt-6 border-t border-white/5"
+            className="space-y-3 pt-6 border-t border-gray-100"
             style={{ transform: "translateZ(5px)" }}
           >
-            {service.details.map((detail: string, i: number) => (
-              <div key={i} className="flex items-center text-sm text-gray-500 group-hover:text-gray-300 transition-colors duration-300">
-                <span className="w-1 h-1 bg-orange-500 rounded-full mr-3" />
+            {service.details && service.details.map((detail: string, i: number) => (
+              <div key={i} className="flex items-center text-sm text-gray-500 group-hover:text-black transition-colors duration-300">
+                <span className="w-1.5 h-1.5 bg-orange-500 rounded-full mr-3" />
                 {detail}
               </div>
             ))}
@@ -112,27 +112,48 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
 
 export default function ServicesPage() {
   return (
-    <div className="bg-black min-h-screen text-white selection:bg-orange-500/30">
+    <div className="bg-gray-50 min-h-screen text-black selection:bg-orange-500/30 overflow-hidden relative">
+      {/* Background Ambience */}
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-orange-100/40 rounded-full blur-[150px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[150px]" />
+        <div className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] bg-blue-100/40 rounded-full blur-[150px]" />
+      </div>
+
       <Nav />
       
-      <main className="pt-32 pb-20 px-6 md:px-12 w-full">
-        <div className="mb-20 mt-10">
+      <main className="pt-32 pb-20 px-6 md:px-12 w-full relative z-10">
+        <div className="mb-24 mt-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-8"
+            className="flex flex-col md:flex-row md:items-end justify-between gap-10"
           >
-            <div className="max-w-3xl">
-              <motion.h1 
-                className="text-6xl md:text-8xl font-bold tracking-tighter mb-6"
-                initial={{ opacity: 0, x: -50 }}
+            <div className="max-w-4xl">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="flex items-center gap-2 text-orange-600 font-mono text-sm mb-6 tracking-widest uppercase"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>What We Do</span>
+              </motion.div>
+              
+              <motion.h1 
+                className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-8 leading-none"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                OUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-200">SERVICES</span>
+                OUR <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-black to-orange-600 bg-300% animate-gradient">
+                  SERVICES
+                </span>
               </motion.h1>
-              <p className="text-xl text-gray-400 max-w-xl leading-relaxed">
+              
+              <p className="text-xl md:text-2xl text-gray-600 max-w-2xl leading-relaxed font-light">
                 We craft immersive physical and digital experiences that elevate brands and connect with people in meaningful ways.
               </p>
             </div>
@@ -141,22 +162,23 @@ export default function ServicesPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="hidden md:block"
+              className="hidden lg:block mb-4"
             >
-              <div className="w-32 h-32 rounded-full border border-orange-500/30 flex items-center justify-center animate-spin-slow">
-                <div className="w-24 h-24 rounded-full border border-white/10 flex items-center justify-center">
-                  <ArrowUpRight className="w-8 h-8 text-orange-500" />
+              <div className="w-40 h-40 rounded-full border border-gray-200 flex items-center justify-center animate-spin-slow relative">
+                <div className="absolute inset-0 rounded-full border border-orange-500/20 border-t-orange-500 animate-spin" style={{ animationDuration: '3s' }}></div>
+                <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center shadow-lg">
+                  <ArrowUpRight className="w-10 h-10 text-orange-600" />
                 </div>
               </div>
             </motion.div>
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
-            <Link href={`/services/${service.id}`} key={service.id} className="block h-full">
+            <TransitionLink href={`/services/${service.id}`} key={service.id} className="block h-full">
               <ServiceCard service={service} index={index} />
-            </Link>
+            </TransitionLink>
           ))}
         </div>
       </main>

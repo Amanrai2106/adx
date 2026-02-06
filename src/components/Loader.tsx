@@ -57,7 +57,7 @@ const Loader = () => {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-[99999] h-screen w-screen flex items-center justify-center bg-black text-white text-4xl font-bold"
+      className="fixed inset-0 z-[99999] h-[100dvh] w-full flex items-center justify-center bg-white text-black text-4xl font-bold"
     >
       <span
         className={`transition-opacity duration-500 ${

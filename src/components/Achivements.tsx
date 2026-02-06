@@ -117,7 +117,7 @@ const Achievements: React.FC = () => {
                 width={80}
                 height={80}
                 alt=""
-                className="size-16 md:size-20 logo"
+                className="size-16 md:size-20 logo invert"
               />
             ))}
           </div>

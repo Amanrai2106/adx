@@ -10,6 +10,11 @@ export const services = [
       "Room Identification",
       "Safety & Regulatory Signs",
       "Digital Signage Integration"
+    ],
+    subCategories: [
+      { id: "lobby", title: "Lobby & Reception", image: "/imgs/img-1.png" },
+      { id: "wayfinding", title: "Wayfinding Systems", image: "/imgs/img-2.png" },
+      { id: "ada", title: "ADA Compliant", image: "/imgs/img-3.png" },
     ]
   },
   {
@@ -23,6 +28,11 @@ export const services = [
       "Storefront Signage",
       "Electronic Message Centers",
       "Wayfinding & Campus Signage"
+    ],
+    subCategories: [
+      { id: "illuminated", title: "Illuminated Signs", image: "/imgs/img-4.jpeg" },
+      { id: "monument", title: "Monument & Pylon", image: "/dev/p-1.jpeg" },
+      { id: "banners", title: "Building Wraps", image: "/dev/p-2.jpeg" },
     ]
   },
   {
@@ -36,6 +46,11 @@ export const services = [
       "Experiential Graphic Design",
       "Museum & Gallery Exhibits",
       "Event Signage & Decor"
+    ],
+    subCategories: [
+      { id: "office-branding", title: "Office Branding", image: "/imgs/img-1.png" },
+      { id: "retail-displays", title: "Retail Displays", image: "/imgs/img-2.png" },
+      { id: "exhibits", title: "Exhibits & Events", image: "/imgs/img-3.png" },
     ]
   }
 ];
